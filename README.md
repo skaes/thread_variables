@@ -1,8 +1,9 @@
 # ThreadVariables
 
 This gem provides methods to access thread local variables with a ruby trunk compatible
-API. It also provides an implementation for ruby 1.9, since ruby 1.9.3 made thread locals
-fiber local.
+API. It also provides an implementation of thread local variables for ruby 1.9, since ruby
+1.9 made thread locals fiber local. This change in semantics can lead to surprising
+results when accessing thread locals from enumerators.
 
 See http://bugs.ruby-lang.org/issues/7097
 
