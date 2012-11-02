@@ -1,8 +1,8 @@
-require 'thread_local_variable_access'
+require 'thread_variables'
 require 'test/unit'
 require File.expand_path('../colorized_test_output', __FILE__)
 
-class ThreadLocalVariableAccessTest < Test::Unit::TestCase
+class ThreadVariablesTest < Test::Unit::TestCase
 
   def test_symbol_setter_and_getter
     t = Thread.new { Thread.current.thread_variable_set :foo, 42 }

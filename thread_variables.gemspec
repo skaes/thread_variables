@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'thread_local_variable_access/version'
+require 'thread_variables/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "thread_local_variable_access"
-  gem.version       = ThreadLocalVariableAccess::VERSION
+  gem.name          = "thread_variables"
+  gem.version       = ThreadVariables::VERSION
   gem.authors       = ["Stefan Kaes"]
   gem.email         = ["stefan.kaes@xing.com"]
   gem.description   = %q{Provide thread local variables for ruby 1.9 and API for all ruby versions}

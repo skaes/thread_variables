@@ -1,4 +1,4 @@
-# ThreadLocalVariableAccess
+# ThreadVariables
 
 This gem provides methods to access thread local variables with a ruby trunk compatible
 API. It also provides an implementation for ruby 1.9, since ruby 1.9.3 made thread locals
@@ -11,7 +11,7 @@ See http://bugs.ruby-lang.org/issues/7097
 
 Add this line to your application's Gemfile:
 
-    gem 'thread_local_variable_access'
+    gem 'thread_variables'
 
 And then execute:
 
@@ -19,11 +19,11 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install thread_local_variable_access
+    $ gem install thread_variables
 
 ## Usage
 
-    require "thread_local_variable_access"
+    require "thread_variables"
     Thread.current.thread_variable_set :foo, 5
     Thread.current.thread_variable_get :foo
     Thread.current.thread_variable? :foo

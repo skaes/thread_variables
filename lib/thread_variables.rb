@@ -1,4 +1,4 @@
-require "thread_local_variable_access/version"
+require "thread_variables/version"
 require "thread"
 
 class Thread
