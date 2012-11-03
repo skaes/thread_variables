@@ -1,6 +1,11 @@
-require 'thread_variables'
 require 'test/unit'
 require File.expand_path('../colorized_test_output', __FILE__)
+
+require 'thread'
+if $NATIVE_THREAD_VARIABLES = Thread.instance_methods.include?(:thread_variables)
+  puts ANSI.ansi("\nYou have native thread variables. Hurray!\n", :green)
+end
+require 'thread_variables/access'
 
 class ThreadVariablesTest < Test::Unit::TestCase
 
@@ -125,6 +130,44 @@ class ThreadVariablesTest < Test::Unit::TestCase
     assert_raises(SecurityError) do
       Thread.new { $SAFE = 4; t.thread_variable_set(:foo, :baz) }.join
     end
-  end if RUBY_VERSION > "1.9.3"
+  end if $NATIVE_THREAD_VARIABLES
+
+end
+
+class ProxyTest < Test::Unit::TestCase
+
+  def test_proxy_get
+    t = Thread.new { Thread.current.thread_variable_set :foo, :lol }
+    t.join
+    assert_equal :lol, t.locals[:foo]
+  end
+
+  def test_proxy_set
+    t = Thread.new { Thread.current.locals[:foo] = :lol }
+    t.join
+    assert_equal :lol, t.thread_variable_get(:foo)
+  end
+
+  def test_proxy_key
+    t = Thread.new { Thread.current.thread_variable_set :foo, :lol }
+    t.join
+    assert t.locals.key?(:foo)
+  end
+
+  def test_proxy_keys
+    t = Thread.new { Thread.current.thread_variable_set :foo, :lol }
+    t.join
+    assert_equal [:foo], t.locals.keys
+  end
+
+  def test_or_equals_pattern
+    t = Thread.new do
+      locals = Thread.current.locals
+      locals[:counter] ||= 1
+      locals[:counter] += 1
+    end
+    t.join
+    assert_equal 2, t.thread_variable_get(:counter)
+  end
 
 end

@@ -7,7 +7,6 @@ results when accessing thread locals from enumerators.
 
 See http://bugs.ruby-lang.org/issues/7097
 
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -24,11 +23,27 @@ Or install it yourself as:
 
 ## Usage
 
+Basic interface: (this is the native code interface for ruby trunk)
+
     require "thread_variables"
     Thread.current.thread_variable_set :foo, 5
     Thread.current.thread_variable_get :foo
     Thread.current.thread_variable? :foo
     Thread.current.thread_variables
+
+Convenience interface: (proxied access to native interface)
+
+    require "thread_variables/access"
+    Thread.current.locals[:foo] = 5
+    Thread.current.locals[:foo]
+    Thread.current.locals.key?(:foo)
+    Thread.current.locals.keys
+
+Especially useful for the ||= pattern:
+
+    Thread.current.locals[:counter] ||= 0
+    Thread.current.locals[:counter] += 1
+
 
 ## Contributing
 
