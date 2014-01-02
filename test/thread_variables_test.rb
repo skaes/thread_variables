@@ -130,7 +130,7 @@ class ThreadVariablesTest < Test::Unit::TestCase
     assert_raises(SecurityError) do
       Thread.new { $SAFE = 4; t.thread_variable_set(:foo, :baz) }.join
     end
-  end if $NATIVE_THREAD_VARIABLES
+  end if $NATIVE_THREAD_VARIABLES && RUBY_VERSION < "2.1"
 
 end
 

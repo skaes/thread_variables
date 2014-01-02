@@ -25,6 +25,7 @@ module ThreadVariables
 end
 
 class Thread
+  # this method is only safe to access from Thread.current
   def locals
     @thread_variables_access_proxy ||= ThreadVariables::AccessProxy.new(self)
   end

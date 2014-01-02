@@ -4,6 +4,6 @@ source 'https://rubygems.org'
 gemspec
 
 gem "redgreen", :platform => :ruby_18
-gem "ansi", :platform => :ruby_19
-gem "rake", "~> 0.9.2.2"
+gem "ansi", :platform => [:ruby_19, :ruby_20, :ruby_21]
+gem "rake", "~> 10.1.0"
 
