@@ -1,13 +1,14 @@
-require 'test/unit'
-require File.expand_path('../colorized_test_output', __FILE__)
+require "minitest/autorun"
+require "minitest/pride"
 
-require 'thread'
+require "thread"
 if $NATIVE_THREAD_VARIABLES = Thread.instance_methods.include?(:thread_variables)
+  require "ansi"
   puts ANSI.ansi("\nYou have native thread variables. Hurray!\n", :green)
 end
-require 'thread_variables/access'
+require "thread_variables/access"
 
-class ThreadVariablesTest < Test::Unit::TestCase
+class ThreadVariablesTest < Minitest::Test
 
   def test_symbol_setter_and_getter
     t = Thread.new { Thread.current.thread_variable_set :foo, 42 }
@@ -134,7 +135,7 @@ class ThreadVariablesTest < Test::Unit::TestCase
 
 end
 
-class ProxyTest < Test::Unit::TestCase
+class ProxyTest < Minitest::Test
 
   def test_proxy_get
     t = Thread.new { Thread.current.thread_variable_set :foo, :lol }
