@@ -11,49 +11,51 @@ require "thread_variables/access"
 class ThreadVariablesTest < Minitest::Test
 
   def test_symbol_setter_and_getter
-    t = Thread.new { Thread.current.thread_variable_set :foo, 42 }
+    t = Thread.new { Thread.current.thread_variable_set "fee".freeze.to_sym, 42 }
     t.join
-    assert_equal 42, t.thread_variable_get(:foo)
+    assert_equal 42, t.thread_variable_get("fee".to_sym)
   end
 
   def test_string_setter_and_getter
-    t = Thread.new { Thread.current.thread_variable_set "foo", 42 }
+    t = Thread.new { Thread.current.thread_variable_set "fi", 42 }
     t.join
-    assert_equal 42, t.thread_variable_get("foo")
+    assert_equal 42, t.thread_variable_get("fi")
   end
 
   def test_string_setter_and_smybol_getter
     t = Thread.new { Thread.current.thread_variable_set "foo", 42 }
     t.join
-    assert_equal 42, t.thread_variable_get(:foo)
+    assert_equal 42, t.thread_variable_get("foo".to_sym)
   end
 
   def test_symbol_setter_and_string_getter
-    t = Thread.new { Thread.current.thread_variable_set :foo, 42 }
+    t = Thread.new { Thread.current.thread_variable_set :fum, 42 }
     t.join
-    assert_equal 42, t.thread_variable_get("foo")
+    assert_equal 42, t.thread_variable_get("fum")
   end
 
   def test_listing_keys
     t = Thread.new do
-      Thread.current.thread_variable_set :foo, 42
-      Thread.current.thread_variable_set "bar", 815
+      Thread.current.thread_variable_set :foox, 42
+      Thread.current.thread_variable_set "barx", 815
     end
     t.join
+    assert_equal 42, t.thread_variable_get(:foox)
+    assert_equal 815, t.thread_variable_get(:barx)
     vs = t.thread_variables
     assert_equal 2, vs.size
-    assert vs.include?(:foo)
-    assert vs.include?(:bar)
+    assert vs.include?(:foox)
+    assert vs.include?(:barx)
   end
 
   def test_ckecking_keys
     t = Thread.new do
-      Thread.current.thread_variable_set :foo, 42
-      Thread.current.thread_variable_set "bar", 815
+      Thread.current.thread_variable_set :fooy, 42
+      Thread.current.thread_variable_set "bary", 815
     end
     t.join
-    assert t.thread_variable?(:foo)
-    assert t.thread_variable?(:bar)
+    assert t.thread_variable?(:fooy)
+    assert t.thread_variable?(:bary)
   end
 
   # official tests
